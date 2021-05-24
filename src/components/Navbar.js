@@ -11,7 +11,7 @@ class NavBar extends Component {
   render() {
     return (
       <>
-        <Link to="/chat">Chat</Link> |{" "}
+        <Link to="/chat">Chat</Link> | <Link to="/counter">Counter</Link> |{" "}
         <button onClick={this.handleLogout}>Logout</button>
       </>
     );

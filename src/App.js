@@ -8,6 +8,7 @@ import PublicRoute from "./helpers/PublicRoute";
 
 import Login from "./pages/auth/Login/Login";
 import Chat from "./pages/main/Chat/Chat";
+import Counter from "./pages/main/Counter/CounterFunctional";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             component={Login}
           />
           <PrivateRoute path="/chat" exact component={Chat} />
+          <PrivateRoute path="/counter" exact component={Counter} />
         </Switch>
       </Router>
     </Provider>
