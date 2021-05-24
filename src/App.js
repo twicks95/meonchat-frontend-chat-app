@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 import PrivateRoute from "./helpers/PrivateRoute";
 import PublicRoute from "./helpers/PublicRoute";
 
@@ -8,12 +11,19 @@ import Chat from "./pages/main/Chat/Chat";
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <PublicRoute restricted={true} path="/login" exact component={Login} />
-        <PrivateRoute path="/chat" exact component={Chat} />
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <PublicRoute
+            restricted={true}
+            path="/login"
+            exact
+            component={Login}
+          />
+          <PrivateRoute path="/chat" exact component={Chat} />
+        </Switch>
+      </Router>
+    </Provider>
   );
 }
 
