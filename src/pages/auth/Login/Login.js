@@ -18,7 +18,7 @@ function Login(props) {
 
   return (
     <>
-      {/* <SplashScreen /> */}
+      <SplashScreen />
       <Container>
         <Card className="mt-5 mx-auto" style={{ width: "25rem" }}>
           <Card.Body>
