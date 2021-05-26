@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button, Container, Form, Card } from "react-bootstrap";
 
+// import SplashScreen from "../../../components/SplashScreen/SplashScreen";
+
 function Login(props) {
   const [username, setUsername] = useState("");
 
@@ -16,6 +18,7 @@ function Login(props) {
 
   return (
     <>
+      {/* <SplashScreen /> */}
       <Container>
         <Card className="mt-5 mx-auto" style={{ width: "25rem" }}>
           <Card.Body>
@@ -32,7 +35,6 @@ function Login(props) {
                   required
                 />
               </Form.Group>
-
               <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
