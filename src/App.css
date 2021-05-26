@@ -1,0 +1,13 @@
+body {
+  font-family: "Rubik", sans-serif;
+}
+
+.btn-primary {
+  background-color: #2675ec;
+  border-color: #2675ec;
+}
+
+.btn-outline-primary {
+  border-color: #2675ec;
+  color: #2675ec;
+}
