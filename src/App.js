@@ -7,14 +7,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
-import PrivateRoute from "./helpers/PrivateRoute";
+// import PrivateRoute from "./helpers/PrivateRoute";
 import PublicRoute from "./helpers/PublicRoute";
 
 import Login from "./pages/auth/Login/Login";
 import Register from "./pages/auth/Register/Register";
 import ResetPassword from "./pages/auth/ResetPassword/ResetPassword";
 import Chat from "./pages/main/Chat/Chat";
-import Counter from "./pages/main/Counter/CounterFunctional";
 
 import io from "socket.io-client";
 
@@ -47,8 +46,7 @@ function App() {
           />
           <Route path="/register" exact component={Register} />
           <Route path="/password/reset" exact component={ResetPassword} />
-          <PrivateRoute socket={socket} path="/chat" exact component={Chat} />
-          <PrivateRoute path="/counter" exact component={Counter} />
+          <Route socket={socket} path="/chat" exact component={Chat} />
         </Switch>
       </Router>
     </Provider>
