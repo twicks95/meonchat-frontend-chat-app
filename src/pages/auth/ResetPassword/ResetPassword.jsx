@@ -52,7 +52,7 @@ function Login(props) {
                 Reset Password
               </h1>
             </div>
-            <span>You’ll get messages soon on your e-mail</span>
+            <span>You’ll get a message soon on your e-mail</span>
             <Form className={`${styles.loginForm}`} onSubmit={handleSend}>
               <Form.Group className="mb-3">
                 {emptyEmail ? (
@@ -70,7 +70,7 @@ function Login(props) {
                   name="email"
                   value={email}
                   onChange={(event) => changeText(event)}
-                  className={`mb-5 ${styles.input}`}
+                  className={`mb-5 shadow-none ${styles.input}`}
                 />
               </Form.Group>
 

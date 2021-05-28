@@ -46,9 +46,6 @@ function Login(props) {
   };
 
   const changeText = (event) => {
-    // event.target.name === "email"
-    //   ? setEmail(event.target.value)
-    //   : setPassword(event.target.value);
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
@@ -56,7 +53,6 @@ function Login(props) {
     showPassword ? setShowPassword(false) : setShowPassword(true);
   };
 
-  // console.log(email, password);
   console.log(form, emptyEmail, emptyPassword);
 
   return (
@@ -86,7 +82,7 @@ function Login(props) {
                   name="email"
                   value={form.email}
                   onChange={(event) => changeText(event)}
-                  className={`${styles.input}`}
+                  className={`shadow-none ${styles.input}`}
                 />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -105,7 +101,7 @@ function Login(props) {
                     name="password"
                     value={form.password}
                     onChange={(event) => changeText(event)}
-                    className={`${styles.input}`}
+                    className={`shadow-none ${styles.input}`}
                   />
                   <div
                     className={styles.showHidePassword}

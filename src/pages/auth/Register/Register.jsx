@@ -129,7 +129,7 @@ function Login(props) {
                   name="name"
                   value={form.name}
                   onChange={(event) => changeText(event)}
-                  className={`${styles.input}`}
+                  className={`shadow-none ${styles.input}`}
                 />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -148,7 +148,7 @@ function Login(props) {
                   name="email"
                   value={form.email}
                   onChange={(event) => changeText(event)}
-                  className={`${styles.input}`}
+                  className={`shadow-none ${styles.input}`}
                 />
               </Form.Group>
               <Form.Group className="mb-5">
@@ -167,7 +167,7 @@ function Login(props) {
                     name="password"
                     value={form.password}
                     onChange={(event) => changeText(event)}
-                    className={`${styles.input}`}
+                    className={`shadow-none ${styles.input}`}
                   />
                   <div
                     className={styles.showHidePassword}
