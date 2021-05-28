@@ -1,0 +1,75 @@
+.textColorPrimary {
+  color: #2675ec;
+}
+
+.barContainer {
+  position: absolute;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  padding: 3% 30px;
+  background-color: #ffffff;
+  box-shadow: -20px 0px 20px rgba(126, 152, 223, 0.05);
+  border-left: 1px solid #e5e5e5;
+}
+
+.headBar {
+  position: relative;
+}
+
+.headBar h2 {
+  font-size: 24px;
+}
+
+.chevronLeft {
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+}
+
+.profileContainer {
+  margin-top: 53px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.profileContainer .avatar {
+  width: 82px;
+  border-radius: 32px;
+  text-align: center;
+  margin: 0px 0px 25px;
+}
+
+/* .IChat {
+  position: absolute;
+  top: 0;
+} */
+
+.detailInfo .name {
+  font-size: 22px;
+}
+
+.detailInfo .phone {
+  font-size: 18px !important;
+}
+
+.navigation {
+  margin-top: 60px;
+}
+
+.navigation ul {
+  padding: 0;
+}
+
+.navigation ul li {
+  color: #232323;
+  padding: 4% 7%;
+  font-weight: 500;
+  list-style: none;
+}
+
+.active {
+  color: #ffffff !important;
+  background-color: #2675ec;
+  border-radius: 20px;
+}
