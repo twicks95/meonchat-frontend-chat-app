@@ -1,0 +1,144 @@
+.textColorPrimary {
+  color: #2675ec;
+}
+
+.barContainer {
+  height: 100vh;
+  width: 500px;
+  padding: 3% 30px;
+  box-shadow: 20px 0px 20px rgba(126, 152, 223, 0.05);
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.barContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.headBar {
+  position: relative;
+}
+
+.headBar h1 {
+  font-size: 29px;
+  font-weight: 500;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.friesMenu {
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+}
+
+.fries1 {
+  width: 22px;
+}
+
+.fries1,
+.fries2 {
+  background-color: #2675ec;
+}
+
+.fries1,
+.fries2 {
+  height: 3.3px;
+  border-radius: 20px;
+}
+
+.fries2 {
+  width: 13.2px;
+  margin: 4.4px 0px;
+  transition: width 0.2s ease-in-out;
+}
+
+.friesMenu:hover .fries2 {
+  width: 100%;
+}
+
+.show {
+  display: inline-block !important;
+}
+
+.collapseMenu {
+  display: none;
+  position: absolute;
+  width: 200px;
+  top: 40px;
+  right: 0;
+  border-radius: 35px 10px 35px 35px;
+  padding: 4% 10%;
+  background-color: #2675ec;
+  z-index: 99;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.collapseMenu .menu {
+  cursor: pointer;
+  padding: 10px 0px;
+  border-radius: 15px;
+}
+
+.collapseMenu .menu:hover {
+  background-color: rgba(26, 94, 197, 0.699);
+}
+
+.collapseMenu .mIcon {
+  width: 70%;
+}
+
+.collapseMenu .mIconS {
+  width: 80%;
+  margin-right: 7px;
+}
+
+.collapseMenu .menu:not(:last-child) {
+  margin-bottom: 2px;
+}
+
+.searchBar {
+  position: relative;
+  margin: 50px 0px 20px 0px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 20px;
+}
+
+.plusIcon {
+  cursor: pointer;
+}
+
+.searchBar input {
+  border-style: none;
+  padding: 0px 10% 0px 20%;
+  height: 60px;
+  width: 100%;
+  border-radius: 15px;
+  outline: none;
+}
+
+.searchBar:focus {
+  outline: none !important;
+}
+
+.chatList {
+  height: 100vh;
+  padding: 10px 0px;
+  overflow: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.chatList::-webkit-scrollbar {
+  display: none;
+}

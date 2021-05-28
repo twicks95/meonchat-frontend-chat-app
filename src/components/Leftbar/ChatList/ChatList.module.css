@@ -1,0 +1,52 @@
+.chatListContainer {
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.avatarContainer {
+  position: relative;
+}
+
+.avatar {
+  width: 64px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.chatListContainer h5 {
+  font-size: 18px;
+}
+
+.chatListContainer p {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 150px;
+  text-overflow: ellipsis;
+  color: #7e98df;
+}
+
+.chatListContainer p,
+.time {
+  font-size: 14px;
+}
+
+.time {
+  color: #848484;
+}
+
+.unreadChatCount {
+  font-size: 12px;
+  /* width: 20px; */
+  padding: 0px 20%;
+  height: 20px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: #2675ec;
+}
+
+.onlineSign {
+  color: #2675ec;
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+}
