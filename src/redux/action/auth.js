@@ -1,4 +1,4 @@
-import axiosApiInstances from "../../utils/axios.js";
+import axiosApiInstances from "../../utils/axios";
 
 export const login = (data) => {
   return {

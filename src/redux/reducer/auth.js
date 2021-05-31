@@ -16,10 +16,10 @@ const auth = (state = initialState, action) => {
     case "LOGIN_FULFILLED":
       return {
         ...state,
-        data: action.payload,
+        data: action.payload.data.data,
         loading: false,
         error: false,
-        message: action.payload,
+        message: action.payload.data.msg,
       };
     case "LOGIN_REJECTED":
       return {
@@ -27,7 +27,7 @@ const auth = (state = initialState, action) => {
         data: action.payload,
         loading: false,
         error: true,
-        message: action.payload,
+        message: action.payload.response.data.msg,
       };
     case "REGISTER_PENDING":
       return {
@@ -40,15 +40,14 @@ const auth = (state = initialState, action) => {
         ...state,
         loading: false,
         error: false,
-        message: action.payload,
+        message: action.payload.data.msg,
       };
     case "REGISTER_REJECTED":
       return {
         ...state,
-        data: action.payload,
         loading: false,
         error: true,
-        message: action.payload,
+        message: action.payload.response.data.msg,
       };
     default:
       return state;
