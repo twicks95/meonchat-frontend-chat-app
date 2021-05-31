@@ -6,7 +6,7 @@ const PublicRoute = ({ component: Component, restricted, ...rest }) => {
   const isAuthenticated = localStorage.getItem("token");
   return (
     <Route
-      {...rest} // path = "...." exact
+      {...rest}
       render={(props) =>
         // <Component {...props} /> = <BasicHome {...props} />
         // isAuthenticated = jika user sudah login (true)
