@@ -8,7 +8,7 @@
 }
 
 .avatar {
-  width: 64px;
+  width: 100%;
   border-radius: 20px;
   object-fit: cover;
 }
@@ -47,6 +47,6 @@
 .onlineSign {
   color: #2675ec;
   position: absolute;
-  right: 3px;
-  bottom: 3px;
+  right: -7%;
+  bottom: 0;
 }

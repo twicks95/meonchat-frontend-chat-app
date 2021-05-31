@@ -18,6 +18,7 @@ function ChatList(props) {
           {props.online ? (
             <FontAwesomeIcon
               icon={faCircle}
+              style={{ width: "50%" }}
               className={`${styles.onlineSign}`}
             />
           ) : (
