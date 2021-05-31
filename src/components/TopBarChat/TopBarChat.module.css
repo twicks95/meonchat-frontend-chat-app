@@ -1,0 +1,52 @@
+.topBarChat {
+  background-color: #ffffff;
+  height: 120px;
+  padding: 0px 5%;
+}
+
+.topBarChat h1 {
+  font-size: 18px;
+  color: #232323;
+}
+
+.topBarChat span {
+  font-size: 15px;
+  color: #2675ec;
+}
+
+.avatar {
+  width: 64px;
+  border-radius: 20px;
+}
+
+.diceMenu {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  cursor: pointer;
+}
+
+.diceMenu:hover .dot {
+  transform: scale(1.3, 1.3);
+}
+
+.diceMenu .dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #2675ec;
+  transition: transform 0.08s ease-in-out;
+}
+
+.diceMenu .dot:nth-child(2) {
+  bottom: 0;
+}
+.diceMenu .dot:nth-child(3) {
+  top: 0;
+  right: 0;
+}
+.diceMenu .dot:nth-child(4) {
+  right: 0;
+  bottom: 0;
+}
