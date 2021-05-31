@@ -34,7 +34,7 @@ axiosApiInstances.interceptors.response.use(
     if (error.response.status === 403) {
       alert("Please login first!");
       localStorage.clear();
-      window.location.href = "/sign-in";
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
