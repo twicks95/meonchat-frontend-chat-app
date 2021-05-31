@@ -54,24 +54,23 @@ function Login(props) {
             </div>
             <span>You’ll get a message soon on your e-mail</span>
             <Form className={`${styles.loginForm}`} onSubmit={handleSend}>
-              <Form.Group className="mb-3">
+              <Form.Group controlId="email" className="mb-5">
+                <Form.Label for="email">Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="meonchat@mail.com"
+                  name="email"
+                  value={email}
+                  onChange={(event) => changeText(event)}
+                  className={`shadow-none ${styles.input}`}
+                />
                 {emptyEmail ? (
-                  <p className={`mb-2 ${styles.inputAlert}`}>
+                  <p className={`mt-2 ${styles.inputAlert}`}>
                     Please input your email
                   </p>
                 ) : (
                   <></>
                 )}
-
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="meonchat@mail.com"
-                  name="email"
-                  value={email}
-                  onChange={(event) => changeText(event)}
-                  className={`mb-5 shadow-none ${styles.input}`}
-                />
               </Form.Group>
 
               <Button

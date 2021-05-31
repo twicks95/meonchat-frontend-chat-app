@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Button, Container, Form, Card } from "react-bootstrap";
-
+import { Button, Container, Form, Card, Alert, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -8,20 +7,19 @@ import {
   faEyeSlash,
   faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
-
 import styles from "./Register.module.css";
-
 import { connect } from "react-redux";
-import { login } from "../../../redux/action/auth";
+import { register } from "../../../redux/action/auth";
 
-function Login(props) {
+function Register(props) {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [emptyName, setEmptyName] = useState(false);
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
 
-  const handleRegister = (event) => {
+  const handleRegister = (event, data) => {
     event.preventDefault();
 
     // when name, email and password empty
@@ -65,20 +63,18 @@ function Login(props) {
       setEmptyName(true);
       setEmptyEmail(false);
       setEmptyPassword(false);
-    } else if (!form.name) {
-      setEmptyName(true);
-    } else if (!form.email) {
-      setEmptyEmail(true);
-    } else if (!form.password) {
-      setEmptyPassword(true);
     } else {
       setEmptyName(false);
       setEmptyEmail(false);
       setEmptyPassword(false);
-      // props.login(form).then(() => {
-      //   localStorage.setItem("token", props.auth.data.data.token);
-      //   props.history.push("/chat");
-      // });
+      props
+        .register(data)
+        .then(() => {
+          props.history.push("/login");
+        })
+        .catch(() => {
+          setRegisterError(true);
+        });
     }
   };
 
@@ -112,17 +108,15 @@ function Login(props) {
               <h1 className={`m-0 ${styles.textColorPrimary}`}>Register</h1>
             </div>
             <span>Let's create your account!</span>
-            <Form className={`${styles.loginForm}`} onSubmit={handleRegister}>
-              <Form.Group className="mb-3">
-                {emptyName ? (
-                  <p className={`mb-2 ${styles.inputAlert}`}>
-                    Please input your name
-                  </p>
-                ) : (
-                  <></>
-                )}
-
-                <Form.Label>Name</Form.Label>
+            <Form
+              className={`${styles.registerForm}`}
+              onSubmit={(e) => handleRegister(e, form)}
+            >
+              {registerError && (
+                <Alert variant="danger">{props.auth.message}</Alert>
+              )}
+              <Form.Group controlId="name" className="mb-3">
+                <Form.Label for="name">Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Meonchat App"
@@ -131,35 +125,30 @@ function Login(props) {
                   onChange={(event) => changeText(event)}
                   className={`shadow-none ${styles.input}`}
                 />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                {emptyEmail ? (
-                  <p className={`mb-2 ${styles.inputAlert}`}>
-                    Please input your email
+                {emptyName && (
+                  <p className={`mt-2 ${styles.inputAlert}`}>
+                    Please input your name
                   </p>
-                ) : (
-                  <></>
                 )}
-
-                <Form.Label>Email</Form.Label>
+              </Form.Group>
+              <Form.Group controlId="email" className="mb-3">
+                <Form.Label for="email">Email</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="email"
                   placeholder="meonchat@mail.com"
                   name="email"
                   value={form.email}
                   onChange={(event) => changeText(event)}
                   className={`shadow-none ${styles.input}`}
                 />
-              </Form.Group>
-              <Form.Group className="mb-5">
-                {emptyPassword ? (
-                  <p className={`mt-4 mb-2 ${styles.inputAlert}`}>
-                    Please input your password
+                {emptyEmail && (
+                  <p className={`mt-2 ${styles.inputAlert}`}>
+                    Please input your email
                   </p>
-                ) : (
-                  <></>
                 )}
-                <Form.Label>Password</Form.Label>
+              </Form.Group>
+              <Form.Group controlId="password" className="mb-5">
+                <Form.Label for="password">Password</Form.Label>
                 <div className={`${styles.inputPassword}`}>
                   <Form.Control
                     type={showPassword ? "text" : "password"}
@@ -179,20 +168,42 @@ function Login(props) {
                     />
                   </div>
                 </div>
+                {emptyPassword && (
+                  <p className={`mt-2 ${styles.inputAlert}`}>
+                    Please input your password
+                  </p>
+                )}
               </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                className={`${styles.btnLogin}`}
-              >
-                Register
-              </Button>
+              {props.auth.loading ? (
+                <Button
+                  variant="primary"
+                  className={`${styles.btnRegister}`}
+                  disabled
+                >
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">Loading...</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className={`${styles.btnRegister}`}
+                >
+                  Register
+                </Button>
+              )}
             </Form>
-            <span className={`${styles.loginWith}`}>Register with</span>
+            <span className={`${styles.registerWith}`}>Register with</span>
             <Button
               variant="outline-primary"
               type="submit"
-              className={`${styles.btnLogin}`}
+              className={`${styles.btnRegister}`}
             >
               <FontAwesomeIcon icon={faGoogle} />
               <span className={`${styles.google}`}>Google</span>
@@ -204,6 +215,8 @@ function Login(props) {
   );
 }
 
-const mapDispatchToProps = { login };
+const mapStateToProps = (state) => ({ auth: state.auth });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = { register };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -35,16 +35,16 @@
   font-weight: 500;
 }
 
-.loginForm {
+.registerForm {
   margin-top: 35px;
 }
 
-.loginForm div label {
+.registerForm div label {
   font-size: 14px;
 }
 
-.loginForm div label,
-.loginWith {
+.registerForm div label,
+.registerWith {
   color: rgba(35, 35, 35, 0.75) !important;
 }
 
@@ -102,7 +102,7 @@
   margin: 35px 0px;
 }
 
-.btnLogin {
+.btnRegister {
   width: 100%;
   height: 60px;
   border-radius: 70px;
@@ -112,15 +112,15 @@
   margin-left: 15px;
 }
 
-.loginWith {
+.registerWith {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 35px 0px;
 }
 
-.loginWith::before,
-.loginWith::after {
+.registerWith::before,
+.registerWith::after {
   content: "";
   width: 30%;
   height: 1px;

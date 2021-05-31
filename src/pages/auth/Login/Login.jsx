@@ -1,27 +1,23 @@
 import { useState } from "react";
-import { Button, Container, Form, Card } from "react-bootstrap";
-
+import { Button, Container, Form, Card, Alert, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { login } from "../../../redux/action/auth";
-
-// import SplashScreen from "../../../components/SplashScreen/SplashScreen";
+import { getUserById } from "../../../redux/action/user";
 
 function Login(props) {
   const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
-  const handleLogin = (event) => {
+  const handleLogin = (event, data) => {
     event.preventDefault();
-
     if (!form.email && !form.password) {
       setEmptyEmail(true);
       setEmptyPassword(true);
@@ -31,17 +27,19 @@ function Login(props) {
     } else if (form.password && !form.email) {
       setEmptyEmail(true);
       setEmptyPassword(false);
-    } else if (!form.email) {
-      setEmptyEmail(true);
-    } else if (!form.password) {
-      setEmptyPassword(true);
     } else {
       setEmptyEmail(false);
       setEmptyPassword(false);
-      // props.login(form).then(() => {
-      //   localStorage.setItem("token", props.auth.data.data.token);
-      //   props.history.push("/chat");
-      // });
+      props
+        .login(data)
+        .then((result) => {
+          localStorage.setItem("token", result.action.payload.data.data.token);
+          props.getUserById(result.action.payload.data.data.user_id);
+          props.history.push("/chat");
+        })
+        .catch(() => {
+          setLoginError(true);
+        });
     }
   };
 
@@ -53,11 +51,10 @@ function Login(props) {
     showPassword ? setShowPassword(false) : setShowPassword(true);
   };
 
-  console.log(form, emptyEmail, emptyPassword);
+  // console.log(props);
 
   return (
     <>
-      {/* <SplashScreen /> */}
       <Container fluid className={`${styles.container}`}>
         <Card className={`${styles.loginCard}`}>
           <Card.Body className={`${styles.cardBody}`}>
@@ -65,35 +62,31 @@ function Login(props) {
               Login
             </h1>
             <span>Hi, Welcome back!</span>
-            <Form className={`${styles.loginForm}`} onSubmit={handleLogin}>
-              <Form.Group className="mb-3">
-                {emptyEmail ? (
-                  <p className={`mb-2 ${styles.inputAlert}`}>
-                    Please input your email
-                  </p>
-                ) : (
-                  <></>
-                )}
-
-                <Form.Label>Email</Form.Label>
+            <Form
+              className={`${styles.loginForm}`}
+              onSubmit={(event) => handleLogin(event, form)}
+            >
+              {loginError && (
+                <Alert variant="danger">{props.auth.message}</Alert>
+              )}
+              <Form.Group controlId="email" className="mb-3">
+                <Form.Label for="email">Email</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="email"
                   placeholder="Email"
                   name="email"
                   value={form.email}
                   onChange={(event) => changeText(event)}
                   className={`shadow-none ${styles.input}`}
                 />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                {emptyPassword ? (
-                  <p className={`mt-4 mb-2 ${styles.inputAlert}`}>
-                    Please input your password
+                {emptyEmail && (
+                  <p className={`mt-2 ${styles.inputAlert}`}>
+                    Please input your email
                   </p>
-                ) : (
-                  <></>
                 )}
-                <Form.Label>Password</Form.Label>
+              </Form.Group>
+              <Form.Group controlId="password" className="mb-3">
+                <Form.Label for="password">Password</Form.Label>
                 <div className={`${styles.inputPassword}`}>
                   <Form.Control
                     type={showPassword ? "text" : "password"}
@@ -113,6 +106,11 @@ function Login(props) {
                     />
                   </div>
                 </div>
+                {emptyPassword && (
+                  <p className={`mt-2 ${styles.inputAlert}`}>
+                    Please input your password
+                  </p>
+                )}
               </Form.Group>
               <Link
                 to="/password/reset"
@@ -120,13 +118,30 @@ function Login(props) {
               >
                 Forgot password?
               </Link>
-              <Button
-                variant="primary"
-                type="submit"
-                className={`${styles.btnLogin}`}
-              >
-                Login
-              </Button>
+              {props.auth.loading ? (
+                <Button
+                  variant="primary"
+                  className={`${styles.btnLogin}`}
+                  disabled
+                >
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">Loading...</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className={`${styles.btnLogin}`}
+                >
+                  Login
+                </Button>
+              )}
             </Form>
             <span className={`${styles.loginWith}`}>Login with</span>
             <Button
@@ -150,6 +165,8 @@ function Login(props) {
   );
 }
 
-const mapDispatchToProps = { login };
+const mapStateToProps = (state) => ({ auth: state.auth });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = { login, getUserById };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
