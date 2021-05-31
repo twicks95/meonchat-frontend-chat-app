@@ -46,7 +46,9 @@ function InviteFriend(props) {
 
   const handleClearResult = () => {
     setData([]);
+    setEmail("");
   };
+
   return (
     <>
       <Modal show={props.show} onHide={props.handleClose} centered>
@@ -73,43 +75,37 @@ function InviteFriend(props) {
           </Form>
           <div className="d-flex justify-content-center mt-5">
             {data ? (
-              data.map(
-                (item, index) => (
-                  <Card key={index} className="w-50 text-center">
-                    <Card.Img
-                      variant="top"
-                      src={
-                        item.user_image
-                          ? `http://localhost:3003/api/${item.user_image}`
-                          : Default
-                      }
-                    />
-                    <Card.Body>
-                      <Card.Title>{item.user_name}</Card.Title>
-                      <Card.Text>{item.user_bio}</Card.Text>
-                      {addedAsFriend ? (
-                        <Button variant="light" disabled>
-                          Added
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="primary"
-                          className="w-100"
-                          onClick={() =>
-                            handleAddFriend(
-                              props.auth.data.user_id,
-                              item.user_id
-                            )
-                          }
-                        >
-                          Add Friend
-                        </Button>
-                      )}
-                    </Card.Body>
-                  </Card>
-                )
-                // console.log(item)
-              )
+              data.map((item, index) => (
+                <Card key={index} className="w-50 text-center">
+                  <Card.Img
+                    variant="top"
+                    src={
+                      item.user_image
+                        ? `http://localhost:3003/api/${item.user_image}`
+                        : Default
+                    }
+                  />
+                  <Card.Body>
+                    <Card.Title>{item.user_name}</Card.Title>
+                    <Card.Text>{item.user_bio}</Card.Text>
+                    {addedAsFriend ? (
+                      <Button variant="light" disabled>
+                        Added
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        className="w-100"
+                        onClick={() =>
+                          handleAddFriend(props.auth.data.user_id, item.user_id)
+                        }
+                      >
+                        Add Friend
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              ))
             ) : (
               <></>
             )}
