@@ -1,8 +1,14 @@
 import axiosApiInstances from "../../utils/axios";
 
-export const getUserById = (id, email) => {
+export const getUser = (id, email) => {
   return {
     type: "GET_USER",
+    payload: axiosApiInstances.get(`/user/?userId=${id}&userEmail=${email}`),
+  };
+};
+export const getFriend = (id, email) => {
+  return {
+    type: "GET_FRIEND",
     payload: axiosApiInstances.get(`/user/?userId=${id}&userEmail=${email}`),
   };
 };
