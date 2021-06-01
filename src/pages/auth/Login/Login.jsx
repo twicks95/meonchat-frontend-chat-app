@@ -7,7 +7,7 @@ import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../../redux/action/auth";
-import { getUserById } from "../../../redux/action/user";
+import { getUser } from "../../../redux/action/user";
 
 function Login(props) {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -34,7 +34,7 @@ function Login(props) {
         .login(data)
         .then((result) => {
           localStorage.setItem("token", result.action.payload.data.data.token);
-          props.getUserById(result.action.payload.data.data.user_id);
+          props.getUser(result.action.payload.data.data.user_id);
           props.history.push("/chat");
         })
         .catch(() => {
@@ -167,6 +167,6 @@ function Login(props) {
 
 const mapStateToProps = (state) => ({ auth: state.auth });
 
-const mapDispatchToProps = { login, getUserById };
+const mapDispatchToProps = { login, getUser };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
