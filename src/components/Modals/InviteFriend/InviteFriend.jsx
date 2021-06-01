@@ -8,13 +8,14 @@ import {
 } from "../../../redux/action/contact";
 import styles from "./InviteFriend.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import Default from "../../../assets/images/default.jpg";
 
 function InviteFriend(props) {
   const [data, setData] = useState([]);
   const [email, setEmail] = useState("");
   const [addedAsFriend, setAddedAsFriend] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   const changeText = (e) => {
     setEmail(e.target.value);
@@ -22,20 +23,27 @@ function InviteFriend(props) {
 
   const handleSearchFriend = (e, email) => {
     e.preventDefault();
-    props.getFriend(null, email).then((result) => {
-      setData(result.action.payload.data.data);
-      props
-        .getContactByUserAndFriendId(
-          props.auth.data.user_id,
-          result.action.payload.data.data[0].user_id
-        )
-        .then(() => {
-          setAddedAsFriend(true);
-        })
-        .catch(() => {
-          setAddedAsFriend(false);
-        });
-    });
+    props
+      .getFriend(null, email)
+      .then((result) => {
+        setNotFound(false);
+        setData(result.action.payload.data.data);
+        props
+          .getContactByUserAndFriendId(
+            props.auth.data.user_id,
+            result.action.payload.data.data[0].user_id
+          )
+          .then(() => {
+            setAddedAsFriend(true);
+          })
+          .catch(() => {
+            setAddedAsFriend(false);
+          });
+      })
+      .catch(() => {
+        setNotFound(true);
+        setData([]);
+      });
   };
 
   const handleAddFriend = (userId, friendId) => {
@@ -51,7 +59,11 @@ function InviteFriend(props) {
 
   return (
     <>
-      <Modal show={props.show} onHide={props.handleClose} centered>
+      <Modal
+        show={props.show}
+        onHide={props.handleClose}
+        style={{ scrollbarWidth: "none" }}
+      >
         <Modal.Header>
           <Modal.Title>Invite Friend</Modal.Title>
         </Modal.Header>
@@ -63,6 +75,7 @@ function InviteFriend(props) {
                 <Form.Control
                   type="email"
                   name="email"
+                  value={email}
                   placeholder="Enter your friend's email address"
                   className="me-2"
                   onChange={(e) => changeText(e)}
@@ -74,9 +87,10 @@ function InviteFriend(props) {
             </Form.Group>
           </Form>
           <div className="d-flex justify-content-center mt-5">
+            {notFound && <p>User not found</p>}
             {data ? (
               data.map((item, index) => (
-                <Card key={index} className="w-50 text-center">
+                <Card key={index} className={`w-50 text-center ${styles.card}`}>
                   <Card.Img
                     variant="top"
                     src={
@@ -119,7 +133,7 @@ function InviteFriend(props) {
               onClick={handleClearResult}
             >
               <FontAwesomeIcon
-                icon={faTimes}
+                icon={faTrashAlt}
                 className={`me-2 ${styles.closeIcon}`}
               />
               Clear result
