@@ -14,14 +14,16 @@ function Home(props) {
 
   return (
     <div className={`${styles.container}`}>
-      <div className="">
+      <div className="d-flex flex-column justify-content-center">
         <h1>Meonchat</h1>
-        <Button variant="primary" onClick={handleLogin}>
-          Login
-        </Button>
-        <Button variant="outline-primary" onClick={handleRegister}>
-          Create account
-        </Button>
+        <div className="d-flex">
+          <Button variant="primary" onClick={handleLogin}>
+            Login
+          </Button>
+          <Button variant="outline-primary" onClick={handleRegister}>
+            Create account
+          </Button>
+        </div>
       </div>
     </div>
   );
