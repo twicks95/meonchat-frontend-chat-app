@@ -3,7 +3,7 @@
 }
 
 .barContainer {
-  height: 100vh;
+  height: 100%;
   width: 450px;
   padding: 0px 30px 3%;
   box-shadow: 20px 0px 20px rgba(126, 152, 223, 0.05);

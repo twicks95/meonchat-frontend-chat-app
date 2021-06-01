@@ -1,29 +1,32 @@
 import styles from "./Leftbar.module.css";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { getRooms } from "../../redux/action/roomChat";
+import { getChat } from "../../redux/action/chat";
 import ChatList from "./ChatList/ChatList";
 import SettingBar from "../SettingBar/SettingBar";
-
 import ISetting from "../../assets/icons/Settings.svg";
 import IUser from "../../assets/icons/Contacts.svg";
 import IAddUser from "../../assets/icons/Invite friends.svg";
 import IFaq from "../../assets/icons/FAQ.svg";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-
+import { Col, Row, Spinner } from "react-bootstrap";
 import Search from "../../assets/icons/Search.svg";
 import Plus from "../../assets/icons/Plus.svg";
-import Avatar1 from "../../assets/images/user1.png";
-import Avatar2 from "../../assets/images/user2.png";
-import Avatar3 from "../../assets/images/user3.png";
+import Default from "../../assets/images/default.jpg";
+import InviteFriendModal from "../Modals/InviteFriend/InviteFriend.jsx";
+import ContactsModal from "../Modals/Contacts/Contacts.jsx";
 
 function Leftbar(props) {
   const [showMenu, setShowMenu] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
 
   // State edit password modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showContacts, setShowContacts] = useState(false);
+  const [showInvite, setShowInvite] = useState(false);
+  const handleContacts = () =>
+    showContacts ? setShowContacts(false) : setShowContacts(true);
+  const handleInvite = () =>
+    showInvite ? setShowInvite(false) : setShowInvite(true);
   // ========================
 
   const handleClickMenu = () => {
@@ -33,6 +36,15 @@ function Leftbar(props) {
     setShowMenu(false);
     showSetting ? setShowSetting(false) : setShowSetting(true);
   };
+  const handleClickList = (roomChat) => {
+    console.log("OK");
+    props.getChat(roomChat);
+  };
+
+  useEffect(() => {
+    props.getRooms(props.auth.data.user_id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -65,7 +77,10 @@ function Leftbar(props) {
                 </Col>
                 <Col className="p-0">Settings</Col>
               </Row>
-              <Row className={`d-flex align-items-center ${styles.menu}`}>
+              <Row
+                className={`d-flex align-items-center ${styles.menu}`}
+                onClick={handleContacts}
+              >
                 <Col xs={4} className="d-flex justify-content-center">
                   <img src={IUser} alt="icon" className={styles.mIcon} />
                 </Col>
@@ -73,7 +88,7 @@ function Leftbar(props) {
               </Row>
               <Row
                 className={`d-flex align-items-center ${styles.menu}`}
-                onClick={handleShow}
+                onClick={handleInvite}
               >
                 <Col xs={4} className="d-flex justify-content-center">
                   <img src={IAddUser} alt="icon" className={styles.mIconS} />
@@ -94,61 +109,41 @@ function Leftbar(props) {
             <img src={Plus} alt="add" className={`${styles.plusIcon}`} />
           </div>
           <div className={`${styles.chatList}`}>
-            <ChatList
-              avatar={Avatar1}
-              name="Theresa Webb"
-              lastChat="Why did you do that?"
-              lastTime="15:20"
-              unreadMessage="2"
-            />
-            <ChatList
-              avatar={Avatar2}
-              name="Calvin Flores"
-              lastChat="Hi, bro! Come to my house!"
-              lastTime="15:13"
-              unreadMessage="1"
-              online="true"
-            />
-            <ChatList
-              avatar={Avatar3}
-              name="Gregory Bell"
-              lastChat="Will you stop ignoring me?"
-              lastTime="15:13"
-              unreadMessage="164"
-            />
-            <ChatList
-              avatar={Avatar3}
-              name="Gregory Bell"
-              lastChat="Will you stop ignoring me?"
-              lastTime="15:13"
-              unreadMessage="164"
-            />
+            {props.roomChat.loading ? (
+              <div className="d-flex justify-content-center align-items-center h-100">
+                <Spinner animation="grow" variant="primary" />
+              </div>
+            ) : (
+              props.roomChat.data.map((item, index) => (
+                <ChatList
+                  key={index}
+                  avatar={
+                    item.user_image
+                      ? `http://localhost:3003/api/${item.user_image}`
+                      : Default
+                  }
+                  name={item.user_name}
+                  lastChat="Why did you do that?"
+                  lastTime="15:20"
+                  unreadMessage="2"
+                  handleClickList={() => handleClickList()}
+                />
+              ))
+            )}
           </div>
+          <InviteFriendModal show={showInvite} handleClose={handleInvite} />
+          <ContactsModal show={showContacts} handleClose={handleContacts} />
         </div>
       )}
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header>
-          <Modal.Title>Invite Friend</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group controlId="formBasicEmail" className="mb-3">
-            <Form.Label>Friend Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              placeholder="Enter your friend's email address"
-              // onChange={changeText}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }
 
-export default Leftbar;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  roomChat: state.roomChat,
+  chat: state.chat,
+});
+const mapDispatchToProps = { getRooms, getChat };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Leftbar);

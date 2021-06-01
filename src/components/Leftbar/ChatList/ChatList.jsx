@@ -8,7 +8,10 @@ import { Col, Row } from "react-bootstrap";
 
 function ChatList(props) {
   return (
-    <div className={`${styles.chatListContainer}`}>
+    <div
+      className={`${styles.chatListContainer}`}
+      onClick={props.handleClickList}
+    >
       <Row>
         <Col
           xs={3}
@@ -37,9 +40,9 @@ function ChatList(props) {
           xs={3}
           className="d-flex flex-column align-items-end justify-content-between"
         >
-          <span className={`mt-2 ${styles.time}`}>{props.lastTime}</span>
+          <span className={`${styles.time}`}>{props.lastTime}</span>
           <div
-            className={`d-flex align-items-center justify-content-center mb-2 ${styles.unreadChatCount}`}
+            className={`d-flex align-items-center justify-content-center ${styles.unreadChatCount}`}
           >
             {props.unreadMessage}
           </div>

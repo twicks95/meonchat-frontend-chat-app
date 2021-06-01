@@ -3,9 +3,9 @@
 }
 
 .barContainer {
-  height: 100vh;
+  height: 100%;
   width: 450px;
-  padding: 0px 30px 3%;
+  padding: 0px 30px 10%;
   box-shadow: 20px 0px 20px rgba(126, 152, 223, 0.05);
   overflow: auto;
   border-right: 1px solid #e5e5e5;
@@ -138,4 +138,11 @@ textarea {
 
 .inputLabel {
   display: none;
+}
+
+.imageToast {
+  position: absolute;
+  left: 20px;
+  top: 30px;
+  z-index: 100;
 }

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useState } from "react";
+import { Alert, Button, Col, Form, Modal, Row, Toast } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import styles from "./SettingBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,10 +9,11 @@ import {
   faSave,
   faLock,
   faSignOutAlt,
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import {
-  getUserById,
+  getUser,
   updateUserName,
   updateUserUsername,
   updateUserPhone,
@@ -63,12 +64,12 @@ function Settingbar(props) {
     for (const field in data) {
       formData.append(field, data[field]);
     }
-
     props
       .updateUserImage(id, formData)
       .then(() => {
-        props.getUserById(id);
+        props.getUser(id);
         setSmShow(false);
+        setImageSuccess(true);
         setImage(null);
       })
       .catch(() => {
@@ -119,25 +120,25 @@ function Settingbar(props) {
   const handleSaveName = (id, data) => {
     setEditName(false);
     props.updateUserName(id, data).then(() => {
-      props.getUserById(id);
+      props.getUser(id);
     });
   };
   const handleSavePhone = (id, data) => {
     setEditPhone(false);
     props.updateUserPhone(id, data).then(() => {
-      props.getUserById(id);
+      props.getUser(id);
     });
   };
   const handleSaveUsername = (id, data) => {
     setEditUsername(false);
     props.updateUserUsername(id, data).then(() => {
-      props.getUserById(id);
+      props.getUser(id);
     });
   };
   const handleSaveBio = (id, data) => {
     setEditBio(false);
     props.updateUserBio(id, data).then(() => {
-      props.getUserById(id);
+      props.getUser(id);
     });
   };
 
@@ -148,6 +149,22 @@ function Settingbar(props) {
 
   return (
     <div className={`${styles.barContainer}`}>
+      <Toast
+        onClose={() => setImageSuccess(false)}
+        show={imageSuccess}
+        delay={5000}
+        className={styles.imageToast}
+        autohide
+      >
+        <Toast.Header closeButton={false}>
+          <FontAwesomeIcon icon={faInfoCircle} className="me-2" />
+          <strong className="mr-auto">Image upload</strong>
+        </Toast.Header>
+        <Toast.Body>
+          Good Pose! Your profile picture just updated successfully...
+        </Toast.Body>
+      </Toast>
+
       {/* Modal */}
       <div>
         <Modal show={show} onHide={handleClose} centered>
@@ -202,6 +219,7 @@ function Settingbar(props) {
           show={smShow}
           onHide={() => {
             setSmShow(false);
+            setImage(null);
             setImageError(false);
           }}
           aria-labelledby="example-modal-sizes-title-sm"
@@ -225,6 +243,7 @@ function Settingbar(props) {
               variant="secondary"
               onClick={() => {
                 setSmShow(false);
+                setImage(null);
                 setImageError(false);
               }}
             >
@@ -256,7 +275,7 @@ function Settingbar(props) {
         <div
           className={`d-flex flex-column align-items-center ${styles.topContainer}`}
         >
-          <div className={`mb-3 ${styles.avaContainer}`} onClick>
+          <div className={`mb-3 ${styles.avaContainer}`}>
             <label for="upload">
               <img
                 src={
@@ -419,7 +438,7 @@ function Settingbar(props) {
               <span>Bio</span>
             </Col>
           </Row>
-          <h2 className={`mt-4 mb-3 ${styles.label}`}>Settings</h2>
+          <h2 className={`mt-5 mb-3 ${styles.label}`}>Settings</h2>
           <div>
             <div
               className={`d-flex align-items-center ${styles.settingActionBtn}`}
@@ -451,7 +470,7 @@ function Settingbar(props) {
 const mapStateToProps = (state) => ({ auth: state.auth, user: state.user });
 
 const mapDispatchToProps = {
-  getUserById,
+  getUser,
   updateUserName,
   updateUserUsername,
   updateUserPhone,
