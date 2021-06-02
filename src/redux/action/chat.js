@@ -9,6 +9,6 @@ export const getChat = (roomChat) => {
 export const createChat = (data) => {
   return {
     type: "CREATE_CHAT",
-    payload: axiosApiInstances.get(`/chat`, data),
+    payload: axiosApiInstances.post(`/chat`, data),
   };
 };

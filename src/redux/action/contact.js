@@ -12,6 +12,12 @@ export const getContacts = (userId) => {
     payload: axiosApiInstances.get(`/contact/${userId}`),
   };
 };
+export const getContactInfo = (userId) => {
+  return {
+    type: "GET_CONTACT_INFO",
+    payload: axiosApiInstances.get(`/user/?userId=${userId}`),
+  };
+};
 export const getContactByUserAndFriendId = (userId, friendId) => {
   return {
     type: "GET_CONTACT_BY_USER_AND_FRIEND_ID",
