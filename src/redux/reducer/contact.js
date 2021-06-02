@@ -1,5 +1,6 @@
 const initialState = {
   data: [],
+  contactInfo: [],
   loading: false,
   error: false,
   message: "",
@@ -44,6 +45,28 @@ const contact = (state = initialState, action) => {
       return {
         ...state,
         data: [],
+        loading: false,
+        error: true,
+        message: action.payload.response.data.msg,
+      };
+    case "GET_CONTACT_INFO_PENDING":
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    case "GET_CONTACT_INFO_FULFILLED":
+      return {
+        ...state,
+        contactInfo: action.payload.data.data,
+        loading: false,
+        error: false,
+        message: action.payload.data.msg,
+      };
+    case "GET_CONTACT_INFO_REJECTED":
+      return {
+        ...state,
+        contactInfo: [],
         loading: false,
         error: true,
         message: action.payload.response.data.msg,

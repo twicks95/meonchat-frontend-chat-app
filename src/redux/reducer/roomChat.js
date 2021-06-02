@@ -1,5 +1,6 @@
 const initialState = {
-  data: [],
+  rooms: [],
+  room: [],
   loading: false,
   error: false,
   createLoading: false,
@@ -38,7 +39,7 @@ const roomChat = (state = initialState, action) => {
     case "GET_ROOMS_FULFILLED":
       return {
         ...state,
-        data: action.payload.data.data,
+        rooms: action.payload.data.data,
         loading: false,
         error: false,
         message: action.payload.data.msg,
@@ -46,10 +47,37 @@ const roomChat = (state = initialState, action) => {
     case "GET_ROOMS_REJECTED":
       return {
         ...state,
-        data: [],
+        rooms: [],
         loading: false,
         error: true,
         message: action.payload.response.data.msg,
+      };
+    case "GET_ROOM_PENDING":
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    case "GET_ROOM_FULFILLED":
+      return {
+        ...state,
+        room: action.payload.data.data,
+        loading: false,
+        error: false,
+        message: action.payload.data.msg,
+      };
+    case "GET_ROOM_REJECTED":
+      return {
+        ...state,
+        room: [],
+        loading: false,
+        error: true,
+        message: action.payload.response.data.msg,
+      };
+    case "CLEAR_ROOM":
+      return {
+        ...state,
+        room: [],
       };
     default:
       return state;
