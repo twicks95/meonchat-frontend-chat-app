@@ -10,8 +10,10 @@ import IImage from "../../assets/icons/image.svg";
 import IDocuments from "../../assets/icons/documents.svg";
 import IUser from "../../assets/icons/Contacts.svg";
 import ILocation from "../../assets/icons/Location.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-function BottomBarChat() {
+function BottomBarChat(props) {
   const [showAdd, setShowAdd] = useState(false);
 
   const handleClickAdd = () => {
@@ -22,7 +24,19 @@ function BottomBarChat() {
     <div
       className={`d-flex align-items-center justify-content-between w-100 ${styles.typingChatBar}`}
     >
-      <input name="message" placeholder="Type your message..." />
+      <div className={`d-flex align-items-center ${styles.messageInput}`}>
+        <input
+          name="message"
+          value={props.message}
+          placeholder="Type your message..."
+          onChange={(e) => props.changeText(e)}
+        />
+        <FontAwesomeIcon
+          icon={faPaperPlane}
+          className={styles.paperPlane}
+          onClick={props.handleSendMessage}
+        />
+      </div>
       <div className={`${styles.actionTyping}`}>
         <div className={`${showAdd ? styles.show : ""} ${styles.collapseMenu}`}>
           <Row className={`d-flex align-items-center ${styles.menu}`}>

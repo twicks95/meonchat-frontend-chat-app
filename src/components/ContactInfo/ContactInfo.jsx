@@ -4,10 +4,11 @@ import styles from "./ContactInfo.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-
+import Default from "../../assets/images/default.jpg";
 import Chat from "../../assets/icons/Chat.svg";
 
-import Avatar5 from "../../assets/images/user5.png";
+import { connect } from "react-redux";
+
 import Img1 from "../../assets/images/img1.jpg";
 import Img2 from "../../assets/images/img2.jpg";
 import Img3 from "../../assets/images/img3.jpg";
@@ -40,6 +41,8 @@ function ContactInfo(props) {
     setDocuments(true);
   };
 
+  const { contactInfo } = props.contact;
+
   return (
     <div
       className={`${props.showInfo ? "" : styles.hide} ${styles.barContainer}`}
@@ -52,12 +55,22 @@ function ContactInfo(props) {
           className={`${styles.chevronRight} ${styles.textColorPrimary}`}
           onClick={props.handleShowInfo}
         />
-        <h2 className={`m-0 ${styles.textColorPrimary}`}>@mmldolg</h2>
+        <h2 className={`m-0 ${styles.textColorPrimary}`}>
+          {contactInfo.length > 0 && contactInfo[0].user_username}
+        </h2>
       </div>
       <div
         className={`d-flex flex-column align-items-center ${styles.profileContainer}`}
       >
-        <img src={Avatar5} alt="avatar" className={styles.avatar} />
+        <img
+          src={
+            contactInfo.length > 0 && contactInfo[0].user_image
+              ? `http://localhost:3003/api/${contactInfo[0].user_image}`
+              : Default
+          }
+          alt="avatar"
+          className={styles.avatar}
+        />
         <div className="w-100">
           <Row className={styles.detailInfo}>
             <Col
@@ -65,14 +78,16 @@ function ContactInfo(props) {
               className="d-flex align-items-center justify-content-between mb-4"
             >
               <div>
-                <h3 className={`m-0 ${styles.name}`}>Mother</h3>
+                <h3 className={`m-0 ${styles.name}`}>
+                  {contactInfo.length > 0 && contactInfo[0].user_name}
+                </h3>
                 <span>online</span>
               </div>
               <img src={Chat} alt="chat" className={`${styles.IChat}`} />
             </Col>
             <Col xs={12}>
               <h3 className={`m-0 mb-2 ${styles.phone}`}>Phone number</h3>
-              <span>+375(29)9239003</span>
+              <span>{contactInfo.length > 0 && contactInfo[0].user_phone}</span>
             </Col>
           </Row>
         </div>
@@ -174,4 +189,5 @@ function ContactInfo(props) {
   );
 }
 
-export default ContactInfo;
+const mapStateToProps = (state) => ({ contact: state.contact });
+export default connect(mapStateToProps, null)(ContactInfo);

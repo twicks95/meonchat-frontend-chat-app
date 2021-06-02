@@ -134,7 +134,7 @@ function InviteFriend(props) {
             >
               <FontAwesomeIcon
                 icon={faTrashAlt}
-                className={`me-2 ${styles.closeIcon}`}
+                className={`me-2 ${styles.trashIcon}`}
               />
               Clear result
             </Button>

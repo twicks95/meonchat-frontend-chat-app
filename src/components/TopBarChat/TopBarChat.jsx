@@ -1,20 +1,35 @@
 import React from "react";
 import styles from "./TopBarChat.module.css";
 
-import Avatar from "../../assets/images/user5.png";
+import { connect } from "react-redux";
+
+import Default from "../../assets/images/default.jpg";
 
 function TopBarChat(props) {
+  const { room } = props.roomChat;
+
   return (
     <div className={`d-flex align-items-center ${styles.topBarChat}`}>
       <div className={``}>
-        <img src={Avatar} alt="avatar" className={`${styles.avatar}`} />
+        <img
+          src={
+            room.length > 0 && room[0].user_image
+              ? `http://localhost:3003/api/${room[0].user_image}`
+              : Default
+          }
+          alt="avatar"
+          className={`${styles.avatar}`}
+        />
       </div>
       <div className={`mx-3 w-100`}>
-        <h1 className="m-0">Mother</h1>
+        <h1 className="m-0">{room.length > 0 && room[0].user_name}</h1>
         <span>Online</span>
       </div>
       <div>
-        <div className={`${styles.diceMenu}`} onClick={props.handleShowInfo}>
+        <div
+          className={`${styles.diceMenu}`}
+          onClick={() => props.handleShowInfo(room[0].user_id)}
+        >
           <div className={styles.dot} />
           <div className={styles.dot} />
           <div className={styles.dot} />
@@ -25,4 +40,5 @@ function TopBarChat(props) {
   );
 }
 
-export default TopBarChat;
+const mapStateToProps = (state) => ({ roomChat: state.roomChat });
+export default connect(mapStateToProps, null)(TopBarChat);

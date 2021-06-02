@@ -1,7 +1,7 @@
 import styles from "./Leftbar.module.css";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getRooms } from "../../redux/action/roomChat";
+import { getRooms, getRoom } from "../../redux/action/roomChat";
 import { getChat } from "../../redux/action/chat";
 import ChatList from "./ChatList/ChatList";
 import SettingBar from "../SettingBar/SettingBar";
@@ -36,9 +36,11 @@ function Leftbar(props) {
     setShowMenu(false);
     showSetting ? setShowSetting(false) : setShowSetting(true);
   };
-  const handleClickList = (roomChat) => {
-    console.log("OK");
-    props.getChat(roomChat);
+  const handleClickList = (roomChat, userId) => {
+    props.getRoom(roomChat, userId);
+    props.getChat(roomChat).then(() => {
+      props.setMessages(props.chat.data);
+    });
   };
 
   useEffect(() => {
@@ -99,14 +101,19 @@ function Leftbar(props) {
                 <Col xs={4} className="d-flex justify-content-center">
                   <img src={IFaq} alt="icon" className={styles.mIcon} />
                 </Col>
-                <Col className="p-0">Telegram FAQ</Col>
+                <Col className="p-0">Meonchat FAQ</Col>
               </Row>
             </div>
           </div>
           <div className={`d-flex align-items-center ${styles.searchBar}`}>
             <img src={Search} alt="search" className={`${styles.searchIcon}`} />
             <input type="text" placeholder="Type your message..." />
-            <img src={Plus} alt="add" className={`${styles.plusIcon}`} />
+            <img
+              src={Plus}
+              alt="add"
+              className={`${styles.plusIcon}`}
+              onClick={handleContacts}
+            />
           </div>
           <div className={`${styles.chatList}`}>
             {props.roomChat.loading ? (
@@ -114,7 +121,7 @@ function Leftbar(props) {
                 <Spinner animation="grow" variant="primary" />
               </div>
             ) : (
-              props.roomChat.data.map((item, index) => (
+              props.roomChat.rooms.map((item, index) => (
                 <ChatList
                   key={index}
                   avatar={
@@ -126,7 +133,10 @@ function Leftbar(props) {
                   lastChat="Why did you do that?"
                   lastTime="15:20"
                   unreadMessage="2"
-                  handleClickList={() => handleClickList()}
+                  handleClickList={() => {
+                    handleClickList(item.room_chat, props.auth.data.user_id);
+                    props.handleSelectRoom(item.room_chat);
+                  }}
                 />
               ))
             )}
@@ -144,6 +154,6 @@ const mapStateToProps = (state) => ({
   roomChat: state.roomChat,
   chat: state.chat,
 });
-const mapDispatchToProps = { getRooms, getChat };
+const mapDispatchToProps = { getRooms, getRoom, getChat };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Leftbar);
