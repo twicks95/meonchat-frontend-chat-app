@@ -1,7 +1,6 @@
 .mainContainer {
   height: 100vh;
   width: 100vw;
-  border: 2px solid red;
 }
 
 .chatContainer {
@@ -20,4 +19,20 @@
   padding: 2% 5% 12%;
   overflow: auto;
   background-color: #f5f5f5;
+}
+
+.chatText {
+  color: #ffffff;
+  padding: 2% 4%;
+  width: 50%;
+}
+
+.sender {
+  background-color: #70a1eb;
+  border-radius: 24px 24px 24px 6px;
+}
+
+.receiver {
+  background-color: #2675ec;
+  border-radius: 24px 24px 6px 24px;
 }

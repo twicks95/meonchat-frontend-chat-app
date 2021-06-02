@@ -16,8 +16,9 @@ function Home(props) {
     <div className={`${styles.container}`}>
       <div className="d-flex flex-column justify-content-center">
         <h1>Meonchat</h1>
-        <div className="d-flex">
-          <Button variant="primary" onClick={handleLogin}>
+        <p>Share your feeling with friends</p>
+        <div className="d-flex mt-5">
+          <Button variant="primary" className="me-2" onClick={handleLogin}>
             Login
           </Button>
           <Button variant="outline-primary" onClick={handleRegister}>
