@@ -24,7 +24,7 @@ function App() {
 
   const setupSocket = () => {
     const newSocket = io.connect("http://localhost:3003", {
-      path: "/backend3/socket.io",
+      path: "/socket.io",
     });
     newSocket.on("connect", () => {
       console.log("Connected to socket client!");
