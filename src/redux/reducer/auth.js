@@ -24,7 +24,7 @@ const auth = (state = initialState, action) => {
     case "LOGIN_REJECTED":
       return {
         ...state,
-        data: action.payload,
+        data: {},
         loading: false,
         error: true,
         message: action.payload.response.data.msg,
