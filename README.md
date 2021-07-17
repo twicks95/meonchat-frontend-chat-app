@@ -18,6 +18,7 @@ An app that can be used for you to have a chat or conversation online with real-
 [![React](https://img.shields.io/badge/React-v17.0.2-blue)](https://github.com/facebook/react)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-v5.0.x-blue)](https://github.com/twbs/bootstrap)
 [![React Bootstrap](https://img.shields.io/badge/React%20Bootstrap-v1.6.0-lightgrey)](https://github.com/react-bootstrap/react-bootstrap)
+[![Socket.io](https://img.shields.io/badge/Socket.io-v4.1.2-red)](https://github.com/socketio/socket.io)
 
 ## Requirements
 
