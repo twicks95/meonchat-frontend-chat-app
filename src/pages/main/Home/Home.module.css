@@ -12,5 +12,6 @@
 
 .container button {
   width: 200px;
+  height: 64px;
   border-radius: 12px;
 }

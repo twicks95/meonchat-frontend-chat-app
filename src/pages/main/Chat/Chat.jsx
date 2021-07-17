@@ -4,9 +4,9 @@ import Leftbar from "../../../components/Leftbar/Leftbar";
 import ContactInfo from "../../../components/ContactInfo/ContactInfo";
 import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getContactInfo } from "../../../redux/action/contact";
-import { createChat } from "../../../redux/action/chat";
-import { clearRoom } from "../../../redux/action/roomChat";
+import { getContacts, getContactInfo } from "../../../redux/action/contact";
+import { createChat, getChat } from "../../../redux/action/chat";
+import { getRoom, getRooms, clearRoom } from "../../../redux/action/roomChat";
 import TopBarChat from "../../../components/TopBarChat/TopBarChat";
 import BottomBarChat from "../../../components/BottomBarChat/BottomBarChat";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,22 +14,32 @@ import { faComments } from "@fortawesome/free-solid-svg-icons";
 
 function Chat(props) {
   const [showInfo, setShowInfo] = useState(false);
+  // const [room, setRoom] = useState({ new: "", old: "" });
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    props.getContacts(props.auth.data.user_id);
+    props.getRooms(props.auth.data.user_id);
     props.clearRoom();
+    setMessages([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (props.socket) {
-      props.socket.on("chatMessage", (dataMessage) => {
+      props.socket.on("message", (dataMessage) => {
         setMessages([...messages, dataMessage]);
       });
     }
-  }, [props.socket, messages]);
+  }, [messages]);
+
+  // useEffect(() => {
+  //   props.getChat(room).then(() => {
+  //     setMessages(props.chat.data);
+  //   });
+  // }, [room]);
 
   const handleShowInfo = (userId) => {
     if (!showInfo) {
@@ -42,10 +52,16 @@ function Chat(props) {
     setMessage(e.target.value);
   };
 
-  const handleSelectRoom = (roomChat) => {
+  const handleSelectRoom = ({ roomChat, userId }) => {
+    props.socket.emit("joinRoom", {
+      room,
+      username: props.auth.data.user_username,
+    });
     setRoom(roomChat);
-    props.socket.emit("joinRoom", { room });
-    // console.log(room);
+    props.getRoom(roomChat, userId);
+    props.getChat(roomChat).then((res) => {
+      setMessages(res.action.payload.data.data);
+    });
   };
 
   const handleSendMessage = () => {
@@ -56,17 +72,21 @@ function Chat(props) {
       message,
     };
     props.socket.emit("roomMessage", setData);
-    // props.createChat(JSON.stringify(setData));
-    // props.createChat(JSON.stringify(setData));
-    // console.log(JSON.stringify(setData));
-    // console.log(setData, "OK")
+
+    // Insert chat data to database
+    props.createChat(setData).then((res) => {
+      console.log(res);
+    });
     setMessage("");
   };
 
   console.log(messages);
 
   return (
-    <Container fluid className={`d-flex p-0 ${styles.mainContainer}`}>
+    <Container
+      fluid
+      className={`d-flex flex-column flex-md-row p-0 ${styles.mainContainer}`}
+    >
       <Leftbar setMessages={setMessages} handleSelectRoom={handleSelectRoom} />
       <Container
         fluid
@@ -96,7 +116,7 @@ function Chat(props) {
                   >
                     <div
                       className={`d-flex align-items-center ${
-                        styles.chatText
+                        styles.chatTxtContainer
                       } ${
                         item.sender_id === props.auth.data.user_id ||
                         item.senderId === props.auth.data.user_id
@@ -104,6 +124,7 @@ function Chat(props) {
                           : styles.sender
                       }`}
                     >
+                      <span>{item.username}</span>
                       <p className="m-0">{item.message}</p>
                     </div>
                   </Col>
@@ -128,5 +149,13 @@ const mapStateToProps = (state) => ({
   chat: state.chat,
   roomChat: state.roomChat,
 });
-const mapDispatchToProps = { getContactInfo, createChat, clearRoom };
+const mapDispatchToProps = {
+  getContactInfo,
+  getRoom,
+  getRooms,
+  getChat,
+  getContacts,
+  createChat,
+  clearRoom,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
