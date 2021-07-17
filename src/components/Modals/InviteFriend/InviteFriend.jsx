@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Form, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getFriend } from "../../../redux/action/user";
+import { getContacts } from "../../../redux/action/contact";
 import {
   createContact,
   getContactByUserAndFriendId,
@@ -49,6 +50,7 @@ function InviteFriend(props) {
   const handleAddFriend = (userId, friendId) => {
     props.createContact(userId, friendId).then(() => {
       setAddedAsFriend(true);
+      props.getContacts(props.auth.data.user_id);
     });
   };
 
@@ -153,6 +155,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getFriend,
+  getContacts,
   createContact,
   getContactByUserAndFriendId,
 };

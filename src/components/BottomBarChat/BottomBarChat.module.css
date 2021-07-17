@@ -18,6 +18,10 @@
   position: relative;
 }
 
+.messageInput input {
+  padding-right: 10%;
+}
+
 .paperPlane {
   position: absolute;
   right: 3%;

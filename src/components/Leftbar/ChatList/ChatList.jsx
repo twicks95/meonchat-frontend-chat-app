@@ -1,9 +1,7 @@
 import React from "react";
 import styles from "./ChatList.module.css";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
-
 import { Col, Row } from "react-bootstrap";
 
 function ChatList(props) {
@@ -14,7 +12,8 @@ function ChatList(props) {
     >
       <Row>
         <Col
-          xs={3}
+          xs={10}
+          md={9}
           className={`d-flex align-items-center ${styles.avatarContainer}`}
         >
           <img src={props.avatar} alt="avatar" className={styles.avatar} />
@@ -27,9 +26,7 @@ function ChatList(props) {
           ) : (
             <></>
           )}
-        </Col>
-        <Col xs={6} className="d-flex align-items-center">
-          <div>
+          <div className="ms-3">
             <h5>{props.name}</h5>
             <p title={props.lastChat} className="m-0">
               {props.lastChat}
@@ -37,7 +34,8 @@ function ChatList(props) {
           </div>
         </Col>
         <Col
-          xs={3}
+          xs={2}
+          md={3}
           className="d-flex flex-column align-items-end justify-content-between"
         >
           <span className={`${styles.time}`}>{props.lastTime}</span>

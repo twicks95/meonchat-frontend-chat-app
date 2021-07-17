@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createRoom } from "../../../redux/action/roomChat.js";
-import { getContacts } from "../../../redux/action/contact";
 import { getRooms } from "../../../redux/action/roomChat";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -10,11 +9,6 @@ import styles from "./Contacts.module.css";
 import Default from "../../../assets/images/default.jpg";
 
 function Contacts(props) {
-  useEffect(() => {
-    props.getContacts(props.auth.data.user_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleCreateRoom = (userId, friendId) => {
     const date = new Date();
     const roomChat =
@@ -98,5 +92,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   contact: state.contact,
 });
-const mapDispatchToProps = { getContacts, createRoom, getRooms };
+const mapDispatchToProps = { createRoom, getRooms };
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

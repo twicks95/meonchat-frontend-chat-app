@@ -1,8 +1,6 @@
 import styles from "./Leftbar.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
-import { getRooms, getRoom } from "../../redux/action/roomChat";
-import { getChat } from "../../redux/action/chat";
 import ChatList from "./ChatList/ChatList";
 import SettingBar from "../SettingBar/SettingBar";
 import ISetting from "../../assets/icons/Settings.svg";
@@ -36,17 +34,6 @@ function Leftbar(props) {
     setShowMenu(false);
     showSetting ? setShowSetting(false) : setShowSetting(true);
   };
-  const handleClickList = (roomChat, userId) => {
-    props.getRoom(roomChat, userId);
-    props.getChat(roomChat).then(() => {
-      props.setMessages(props.chat.data);
-    });
-  };
-
-  useEffect(() => {
-    props.getRooms(props.auth.data.user_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -134,8 +121,10 @@ function Leftbar(props) {
                   lastTime="15:20"
                   unreadMessage="2"
                   handleClickList={() => {
-                    handleClickList(item.room_chat, props.auth.data.user_id);
-                    props.handleSelectRoom(item.room_chat);
+                    props.handleSelectRoom({
+                      roomChat: item.room_chat,
+                      userId: props.auth.data.user_id,
+                    });
                   }}
                 />
               ))
@@ -152,8 +141,6 @@ function Leftbar(props) {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   roomChat: state.roomChat,
-  chat: state.chat,
 });
-const mapDispatchToProps = { getRooms, getRoom, getChat };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Leftbar);
+export default connect(mapStateToProps, null)(Leftbar);
