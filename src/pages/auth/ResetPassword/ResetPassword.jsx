@@ -55,7 +55,7 @@ function Login(props) {
             <span>You’ll get a message soon on your e-mail</span>
             <Form className={`${styles.loginForm}`} onSubmit={handleSend}>
               <Form.Group controlId="email" className="mb-5">
-                <Form.Label for="email">Email</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="meonchat@mail.com"

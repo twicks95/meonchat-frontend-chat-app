@@ -90,8 +90,6 @@ function Register(props) {
     props.history.push("/login");
   };
 
-  console.log(form, emptyEmail, emptyPassword);
-
   return (
     <>
       <Container fluid className={`${styles.container}`}>
@@ -116,7 +114,7 @@ function Register(props) {
                 <Alert variant="danger">{props.auth.message}</Alert>
               )}
               <Form.Group controlId="name" className="mb-3">
-                <Form.Label for="name">Name</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Meonchat App"
@@ -132,7 +130,7 @@ function Register(props) {
                 )}
               </Form.Group>
               <Form.Group controlId="email" className="mb-3">
-                <Form.Label for="email">Email</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="meonchat@mail.com"
@@ -148,7 +146,7 @@ function Register(props) {
                 )}
               </Form.Group>
               <Form.Group controlId="password" className="mb-5">
-                <Form.Label for="password">Password</Form.Label>
+                <Form.Label>Password</Form.Label>
                 <div className={`${styles.inputPassword}`}>
                   <Form.Control
                     type={showPassword ? "text" : "password"}
