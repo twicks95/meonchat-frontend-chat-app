@@ -16,16 +16,18 @@ function ChatList(props) {
           md={9}
           className={`d-flex align-items-center ${styles.avatarContainer}`}
         >
-          <img src={props.avatar} alt="avatar" className={styles.avatar} />
-          {props.online ? (
-            <FontAwesomeIcon
-              icon={faCircle}
-              style={{ width: "50%" }}
-              className={`${styles.onlineSign}`}
-            />
-          ) : (
-            <></>
-          )}
+          <div style={{ position: "relative" }}>
+            <img src={props.avatar} alt="avatar" className={styles.avatar} />
+            {props.userOnline.includes(props.userId) ? (
+              <FontAwesomeIcon
+                icon={faCircle}
+                style={{ width: "50%" }}
+                className={`${styles.onlineSign}`}
+              />
+            ) : (
+              <></>
+            )}
+          </div>
           <div className="ms-3">
             <h5>{props.name}</h5>
             <p title={props.lastChat} className="m-0">

@@ -38,7 +38,10 @@ function Leftbar(props) {
   return (
     <>
       {showSetting ? (
-        <SettingBar handleClickSetting={handleClickSetting} />
+        <SettingBar
+          socket={props.socket}
+          handleClickSetting={handleClickSetting}
+        />
       ) : (
         <div className={`${styles.barContainer}`}>
           <div
@@ -120,6 +123,8 @@ function Leftbar(props) {
                   lastChat="Why did you do that?"
                   lastTime="15:20"
                   unreadMessage="2"
+                  userId={item.friend_id}
+                  userOnline={props.userOnline}
                   handleClickList={() => {
                     props.handleSelectRoom({
                       roomChat: item.room_chat,

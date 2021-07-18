@@ -143,6 +143,8 @@ function Settingbar(props) {
   };
 
   const handleLogout = () => {
+    const userId = user_id;
+    props.socket.emit("disconnectServer", { userId });
     localStorage.clear();
     props.history.push("/login");
   };
@@ -276,7 +278,7 @@ function Settingbar(props) {
           className={`d-flex flex-column align-items-center ${styles.topContainer}`}
         >
           <div className={`mb-3 ${styles.avaContainer}`}>
-            <label for="upload">
+            <label htmlFor="upload">
               <img
                 src={
                   user_image
@@ -305,7 +307,7 @@ function Settingbar(props) {
               </h1>
             ) : (
               <>
-                <label for="name" className={styles.inputLabel} />
+                <label htmlFor="name" className={styles.inputLabel} />
                 <input
                   id="name"
                   type="text"
@@ -343,7 +345,7 @@ function Settingbar(props) {
                   </h3>
                 ) : (
                   <>
-                    <label for="phone" className={styles.inputLabel} />
+                    <label htmlFor="phone" className={styles.inputLabel} />
                     <input
                       id="phone"
                       type="text"
@@ -378,7 +380,7 @@ function Settingbar(props) {
                   </h3>
                 ) : (
                   <>
-                    <label for="username" className={styles.inputLabel} />
+                    <label htmlFor="username" className={styles.inputLabel} />
                     <input
                       id="username"
                       type="text"
@@ -413,7 +415,7 @@ function Settingbar(props) {
                   </h3>
                 ) : (
                   <>
-                    <label for="bio" className={styles.inputLabel} />
+                    <label htmlFor="bio" className={styles.inputLabel} />
                     <textarea
                       id="bio"
                       type="text"

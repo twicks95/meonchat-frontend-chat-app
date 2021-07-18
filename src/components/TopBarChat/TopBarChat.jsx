@@ -7,7 +7,8 @@ import Default from "../../assets/images/default.jpg";
 
 function TopBarChat(props) {
   const { room } = props.roomChat;
-
+  const { userOnline } = props;
+  console.log(room);
   return (
     <div className={`d-flex align-items-center ${styles.topBarChat}`}>
       <div className={``}>
@@ -23,7 +24,9 @@ function TopBarChat(props) {
       </div>
       <div className={`mx-3 w-100`}>
         <h1 className="m-0">{room.length > 0 && room[0].user_name}</h1>
-        <span>Online</span>
+        <span>
+          {userOnline.includes(room[0].user_id) ? "Online" : "Offline"}
+        </span>
       </div>
       <div>
         <div
