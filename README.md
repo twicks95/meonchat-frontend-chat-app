@@ -31,13 +31,13 @@ An app that can be used for you to have a chat or conversation online with real-
 1. Download this Project or you can type `git clone https://github.com/twicks95/meonchat-frontend-chat-app.git`
 2. Open the app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
-4. Add next.config.js file at root folder project
+4. Add .env file at root folder project
 
 ```sh
 REACT_APP_API_BASE_URL= [Backend URL]
 ```
 
-5. Type `npm run dev`
+5. Type `npm start`
 
 ## Acknowledgements
 
