@@ -1,13 +1,13 @@
 <h1 align='center'>React App - Meonchat - A Realtime App </h1>
   <p align="center">
-    <a href="https://google,com/">View Demo</a>
+    <a href="https://meonchat.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/twicks95/meonchat-frontend-chat-app/issues">Report Bug</a>
     ·
     <a href="https://github.com/twicks95/meonchat-frontend-chat-app/pulls">Request Feature</a>
   </p>
 
-![Image Banner](PATH)
+![Image Banner](public/meonchat.jpg)
 
 ## About The Project
 
