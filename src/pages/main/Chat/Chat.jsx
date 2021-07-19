@@ -51,6 +51,15 @@ function Chat(props) {
     });
   };
 
+  useEffect(() => {
+    if (!message) {
+      props.socket.emit("typing", {
+        room: room.new,
+        typing: false,
+      });
+    }
+  }, [message]);
+
   const handleShowInfo = (userId) => {
     if (!showInfo) {
       props.getContactInfo(userId);
@@ -118,7 +127,7 @@ function Chat(props) {
         <Toast
           onClose={() => setNotif({ ...notif, show: false })}
           show={notif.show}
-          delay={5000}
+          delay={10000}
           autohide
           className={styles.toast}
           style={{ backgroundColor: "white", width: "350px" }}
