@@ -1,14 +1,44 @@
 .splashBackground {
   position: absolute;
   top: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
   width: 100vw;
   z-index: 100;
   background-color: #2675ec;
 }
 
+.splashBackgroundOff {
+  animation: dissappear 0.2s ease-in-out forwards;
+}
+
 .spinnerIcon {
-  width: 6%;
+  margin-right: 10px;
+  width: 30px;
+  animation: spin 1.5s linear infinite;
+}
+
+.splashText {
+  color: #ffffff;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dissappear {
+  0% {
+    background-color: #2675ec;
+  }
+  100% {
+    background-color: #2675ec00;
+    z-index: -99;
+  }
 }

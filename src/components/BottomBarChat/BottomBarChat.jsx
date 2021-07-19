@@ -29,6 +29,7 @@ function BottomBarChat(props) {
           name="message"
           value={props.message}
           placeholder="Type your message..."
+          autoComplete="off"
           onChange={(e) => props.changeText(e)}
         />
         <FontAwesomeIcon
