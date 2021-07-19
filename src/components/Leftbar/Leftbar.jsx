@@ -120,7 +120,7 @@ function Leftbar(props) {
                       : Default
                   }
                   name={item.user_name}
-                  lastChat="Why did you do that?"
+                  lastChat=""
                   lastTime="15:20"
                   unreadMessage="2"
                   userId={item.friend_id}
