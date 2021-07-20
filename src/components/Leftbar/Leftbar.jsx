@@ -116,7 +116,7 @@ function Leftbar(props) {
                   key={index}
                   avatar={
                     item.user_image
-                      ? `${process.env.REACT_APP_API_BASE_URL}${item.user_image}`
+                      ? `${process.env.REACT_APP_API_IMG_URL}${item.user_image}`
                       : Default
                   }
                   name={item.user_name}

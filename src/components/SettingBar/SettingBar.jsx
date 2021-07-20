@@ -21,7 +21,7 @@ import {
   updateUserPassword,
   updateUserImage,
 } from "../../redux/action/user";
-import NoPict from "../../assets/images/default.jpg";
+import Default from "../../assets/images/default.jpg";
 
 function Settingbar(props) {
   const { user_id } = props.auth.data;
@@ -282,8 +282,8 @@ function Settingbar(props) {
               <img
                 src={
                   user_image
-                    ? `${process.env.REACT_APP_API_BASE_URL}${user_image}`
-                    : NoPict
+                    ? `${process.env.REACT_APP_API_IMG_URL}${user_image}`
+                    : Default
                 }
                 alt="avatar"
                 className={styles.avatar}
