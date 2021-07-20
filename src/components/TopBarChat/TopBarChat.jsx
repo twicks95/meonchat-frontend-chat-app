@@ -15,7 +15,7 @@ function TopBarChat(props) {
         <img
           src={
             room.length > 0 && room[0].user_image
-              ? `http://localhost:3003/api/${room[0].user_image}`
+              ? `${process.env.REACT_APP_API_BASE_URL}${room[0].user_image}`
               : Default
           }
           alt="avatar"

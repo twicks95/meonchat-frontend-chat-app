@@ -44,7 +44,7 @@ function Contacts(props) {
                     <img
                       src={
                         item.user_image
-                          ? `http://localhost:3003/api/${item.user_image}`
+                          ? `${process.env.REACT_APP_API_BASE_URL}${item.user_image}`
                           : Default
                       }
                       alt={item.user_name}

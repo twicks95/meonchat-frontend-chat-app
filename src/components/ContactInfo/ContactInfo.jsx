@@ -65,7 +65,7 @@ function ContactInfo(props) {
         <img
           src={
             contactInfo.length > 0 && contactInfo[0].user_image
-              ? `http://localhost:3003/api/${contactInfo[0].user_image}`
+              ? `${process.env.REACT_APP_API_BASE_URL}${contactInfo[0].user_image}`
               : Default
           }
           alt="avatar"

@@ -23,7 +23,7 @@ function App() {
   const [socket, setSocket] = useState(null);
 
   const setupSocket = () => {
-    const newSocket = io.connect("http://localhost:3003", {
+    const newSocket = io.connect("https://meonchat-app.herokuapp.com/", {
       path: "/socket.io",
     });
     newSocket.on("connect", () => {

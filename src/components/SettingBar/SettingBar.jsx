@@ -282,7 +282,7 @@ function Settingbar(props) {
               <img
                 src={
                   user_image
-                    ? `http://localhost:3003/api/${user_image}`
+                    ? `${process.env.REACT_APP_API_BASE_URL}${user_image}`
                     : NoPict
                 }
                 alt="avatar"
